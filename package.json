@@ -1,0 +1,34 @@
+{
+  "name": "asistia-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AsistIA - Front-end (Next.js + Tailwind CSS) del asistente conversacional para las divisiones de TEINCO",
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "test": "vitest run tests/unidad",
+    "test:integracion": "vitest run tests/integracion"
+  },
+  "engines": {
+    "node": ">=20.9"
+  },
+  "dependencies": {
+    "next": "16.4.2",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.8",
+    "@vitejs/plugin-react": "^6.1.2",
+    "jsdom": "^30.1.3",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.23.1",
+    "postcss": "^8",
+    "tailwindcss": "^4",
+    "vitest": "^5.0.5"
+  }
+}
