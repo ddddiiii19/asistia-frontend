@@ -64,8 +64,8 @@ const almacen = await page.evaluate(() => ({ ses: sessionStorage.getItem('asisti
 reporte(!!almacen.ses && almacen.loc === 0 && almacen.cookie === '', 'JWT solo en sessionStorage (localStorage y cookies vacíos)');
 await page.type('textarea#mensaje', 'Quiero información sobre inscripción y admisión');
 await page.keyboard.press('Enter');
-await textoVisible('Dependencia sugerida');
-reporte(true, 'respuesta con dependencia sugerida');
+await textoVisible('Dependencia:');
+reporte(true, 'respuesta con su contacto y dependencia (formato Q8)');
 await foto('02-chat-respuesta-escritorio');
 await page.type('textarea#mensaje', 'zzzz qqqq xxxx');
 await page.keyboard.press('Enter');
@@ -125,7 +125,7 @@ reporte(!(await page.evaluate(() => document.body.innerText.includes('ClaveE2E20
 await cerrarSesion();
 await entrar('admin_registro', env.ADMIN_SEED_PASSWORD);
 await esperarRuta('/admin');
-await textoVisible('solo consulta');
+await textoVisible('Datos de la dependencia');
 reporte(!(await page.evaluate(() => document.body.innerText.includes('Crear cuenta de usuario'))), 'el administrador de dependencia no ve el formulario de alta');
 await cerrarSesion();
 
@@ -214,7 +214,7 @@ await page.setViewport({ width: 375, height: 812, isMobile: true, hasTouch: true
 await page.goto(`${FRONT}/chat`, { waitUntil: 'networkidle0' });
 await page.type('textarea#mensaje', 'Quiero información sobre inscripción y admisión');
 await page.keyboard.press('Enter');
-await textoVisible('Dependencia sugerida');
+await textoVisible('Dependencia:');
 await new Promise((r) => setTimeout(r, 300));
 await foto('12-chat-respuesta-movil');
 reporte(await sinDesbordeHorizontal(), 'móvil con conversación sin desborde horizontal');

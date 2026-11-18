@@ -97,7 +97,7 @@ describe('guardia de rutas por rol', () => {
 });
 
 describe('chat', () => {
-  it('envía la consulta, muestra la respuesta con la dependencia sugerida y conserva la conversación', async () => {
+  it('envía la consulta, muestra la respuesta con su dependencia y conserva la conversación', async () => {
     api.chat.mockResolvedValueOnce({
       id_conversacion: 12, respuesta: 'Debes comunicarte con Admisiones.', dependencia: { id_dependencia: 1, nombre: 'Admisiones' }, escalada: false,
     });
@@ -106,7 +106,7 @@ describe('chat', () => {
     await userEvent.type(screen.getByLabelText('Escribe tu consulta'), 'Quiero inscribirme');
     await userEvent.click(screen.getByRole('button', { name: 'Enviar' }));
     expect(await screen.findByText('Debes comunicarte con Admisiones.')).toBeInTheDocument();
-    expect(screen.getByText('Dependencia sugerida: Admisiones')).toBeInTheDocument();
+    expect(screen.getByText('Dependencia: Admisiones')).toBeInTheDocument();
     const primera = api.chat.mock.calls[0][0];
     expect(primera.mensaje).toBe('Quiero inscribirme');
     expect(primera.idSesion).toMatch(/^[A-Za-z0-9_-]{16,64}$/);
@@ -127,7 +127,7 @@ describe('chat', () => {
     await userEvent.type(screen.getByLabelText('Escribe tu consulta'), 'algo raro');
     await userEvent.click(screen.getByRole('button', { name: 'Enviar' }));
     expect(await screen.findByText('Escalamiento · caso registrado')).toBeInTheDocument();
-    expect(screen.getByText('Dependencia sugerida: Registro y Control')).toBeInTheDocument();
+    expect(screen.getByText('Dependencia: Registro y Control')).toBeInTheDocument();
   });
 
   it('ante un 503 muestra el aviso, retira el mensaje no registrado y devuelve el texto para reintentar', async () => {

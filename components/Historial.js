@@ -7,6 +7,7 @@ import { mensajeError } from '@/lib/errores';
 import { formatearFecha } from '@/lib/fechas';
 import { Alerta } from '@/components/ui';
 import { Burbuja } from '@/components/chat/Burbuja';
+import { EncabezadoModulo } from '@/components/EncabezadoModulo';
 
 export function ListaHistorial() {
   const [estado, setEstado] = useState({ cargando: true, error: '', lista: [] });
@@ -23,8 +24,7 @@ export function ListaHistorial() {
 
   return (
     <section aria-labelledby="titulo-historial">
-      <h1 id="titulo-historial" className="text-xl font-semibold text-marca">Mi historial</h1>
-      <p className="mt-1 text-sm text-slate-600">Tus conversaciones anteriores con el asistente (las 50 más recientes).</p>
+      <EncabezadoModulo modulo="historial" id="titulo-historial" titulo="Mi historial" descripcion="Tus conversaciones anteriores con el asistente (las 50 más recientes)." region={false} />
       <div className="mt-4">
         {estado.cargando ? <p role="status" className="text-sm text-slate-600">Cargando…</p> : null}
         {estado.error ? <Alerta tipo="error">{estado.error}</Alerta> : null}
@@ -81,7 +81,7 @@ export function DetalleConversacion({ id }) {
               {estado.conv.mensajes.map((m) => (
                 <Burbuja
                   key={m.id_mensaje}
-                  mensaje={{ rol: m.emisor === 'usuario' ? 'usuario' : 'asistente', texto: m.contenido }}
+                  mensaje={{ rol: m.emisor === 'usuario' ? 'usuario' : 'asistente', texto: m.contenido, contacto: m.contacto, dependencia: m.dependencia }}
                 />
               ))}
             </ol>

@@ -20,6 +20,20 @@ export function Campo({ etiqueta, error, ayuda, id: idExterno, ...resto }) {
   );
 }
 
+export function CampoTexto({ etiqueta, error, ayuda, id: idExterno, ...resto }) {
+  const idAuto = useId();
+  const id = idExterno || idAuto;
+  const descritoPor = [error ? `${id}-error` : null, ayuda ? `${id}-ayuda` : null].filter(Boolean).join(' ') || undefined;
+  return (
+    <div>
+      <label htmlFor={id} className="mb-1 block text-sm font-medium text-slate-700">{etiqueta}</label>
+      <textarea id={id} rows={5} className={claseEntrada} aria-invalid={error ? 'true' : undefined} aria-describedby={descritoPor} {...resto} />
+      {ayuda ? <p id={`${id}-ayuda`} className="mt-1 text-xs text-slate-500">{ayuda}</p> : null}
+      {error ? <p id={`${id}-error`} className="mt-1 text-sm text-red-700">{error}</p> : null}
+    </div>
+  );
+}
+
 export function Selector({ etiqueta, id: idExterno, children, ...resto }) {
   const idAuto = useId();
   const id = idExterno || idAuto;
@@ -91,6 +105,8 @@ export function Boton({ variante = 'primario', className = '', ...resto }) {
   const base = 'inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold transition focus-visible:outline-2 disabled:cursor-not-allowed disabled:opacity-60';
   const estilos = variante === 'primario'
     ? 'bg-marca text-white hover:bg-marca-oscuro'
-    : 'border border-slate-300 bg-white text-slate-800 hover:bg-slate-100';
+    : variante === 'peligro'
+      ? 'bg-red-700 text-white hover:bg-red-800'
+      : 'border border-slate-300 bg-white text-slate-800 hover:bg-slate-100';
   return <button className={`${base} ${estilos} ${className}`} {...resto} />;
 }

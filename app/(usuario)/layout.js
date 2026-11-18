@@ -4,8 +4,8 @@ import { RequiereRol } from '@/components/RequiereRol';
 import { Encabezado, Pie } from '@/components/Encabezado';
 
 const ENLACES = [
-  { href: '/chat', texto: 'Asistente' },
-  { href: '/historial', texto: 'Mi historial' },
+  { href: '/chat', texto: 'Asistente', modulo: 'chat' },
+  { href: '/historial', texto: 'Mi historial', modulo: 'historial' },
 ];
 
 export default function LayoutUsuario({ children }) {

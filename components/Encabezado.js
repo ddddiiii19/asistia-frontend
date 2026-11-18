@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
 import { rutaInicio } from '@/lib/rutas';
+import { MODULOS_UI } from '@/lib/modulos';
 
 export function Encabezado({ enlaces = [] }) {
   const { cuenta, cerrarSesion } = useAuth();
@@ -14,7 +15,7 @@ export function Encabezado({ enlaces = [] }) {
         <Link href={cuenta ? rutaInicio(cuenta.tipo) : '/login'} className="text-lg font-semibold tracking-tight">
           AsistIA
         </Link>
-        <nav aria-label="Principal" className="order-last flex w-full gap-1 text-sm sm:order-none sm:w-auto">
+        <nav aria-label="Principal" className="order-last flex w-full flex-wrap gap-1 text-sm sm:order-none sm:w-auto">
           {enlaces.map((e) => {
             const activo = ruta === e.href || (!e.exacto && ruta.startsWith(`${e.href}/`));
             return (
@@ -22,8 +23,9 @@ export function Encabezado({ enlaces = [] }) {
                 key={e.href}
                 href={e.href}
                 aria-current={activo ? 'page' : undefined}
-                className={`rounded-md px-3 py-1.5 ${activo ? 'bg-white/20 font-semibold' : 'hover:bg-white/10'}`}
+                className={`flex items-center gap-2 rounded-md px-3 py-1.5 ${activo ? 'bg-white font-semibold text-marca shadow-sm' : 'text-white hover:bg-white/15'}`}
               >
+                {e.modulo && MODULOS_UI[e.modulo] ? <span aria-hidden="true" className={`h-2.5 w-2.5 rounded-full ${activo ? MODULOS_UI[e.modulo].insignia : MODULOS_UI[e.modulo].punto}`} /> : null}
                 {e.texto}
               </Link>
             );

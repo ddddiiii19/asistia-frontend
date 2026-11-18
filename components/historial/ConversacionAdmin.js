@@ -83,7 +83,7 @@ export function ConversacionAdmin({ id }) {
                 <Burbuja
                   key={m.id_mensaje}
                   nombreUsuario="Usuario"
-                  mensaje={{ rol: m.emisor === 'usuario' ? 'usuario' : 'asistente', texto: m.contenido }}
+                  mensaje={{ rol: m.emisor === 'usuario' ? 'usuario' : 'asistente', texto: m.contenido, contacto: m.contacto, dependencia: m.dependencia }}
                 />
               ))}
             </ol>

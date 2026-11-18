@@ -37,6 +37,8 @@ export function Chat() {
           id: `bd-${m.id_mensaje}`,
           rol: m.emisor === 'usuario' ? 'usuario' : 'asistente',
           texto: m.contenido,
+          contacto: m.contacto,
+          dependencia: m.dependencia,
         })));
       })
       .catch((err) => {
@@ -63,7 +65,7 @@ export function Chat() {
       const r = await api.chat({ idSesion: obtenerIdSesion(), mensaje, idConversacion });
       setIdConversacion(r.id_conversacion);
       setMensajes((m) => [...m, {
-        id: nuevoId(), rol: 'asistente', texto: r.respuesta, dependencia: r.dependencia, escalada: r.escalada,
+        id: nuevoId(), rol: 'asistente', texto: r.respuesta, contacto: r.contacto, dependencia: r.dependencia, escalada: r.escalada,
       }]);
     } catch (err) {
       // Un fallo técnico (p. ej. 503) no se registra en el backend: se devuelve el texto para reintentar.
@@ -83,7 +85,7 @@ export function Chat() {
       const r = await api.consultarPregunta(faq.id_faq);
       setMensajes((m) => [...m,
         { id: nuevoId(), rol: 'usuario', texto: r.pregunta, origen: 'faq' },
-        { id: nuevoId(), rol: 'asistente', texto: r.respuesta, origen: 'faq', dependencia: faq.dependencia },
+        { id: nuevoId(), rol: 'asistente', texto: r.respuesta, origen: 'faq', contacto: r.contacto, dependencia: r.dependencia || faq.dependencia },
       ]);
     } catch (err) {
       if (err.estado !== 401) setError(mensajeError(err));
@@ -112,7 +114,7 @@ export function Chat() {
 
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]">
-      <section aria-labelledby="titulo-chat" className="flex flex-col rounded-lg border border-slate-200 bg-slate-100 shadow-sm">
+      <section aria-labelledby="titulo-chat" className="flex flex-col rounded-lg border border-t-4 border-slate-200 border-t-indigo-600 bg-slate-100 shadow-sm">
         <div className="flex items-center justify-between gap-3 border-b border-slate-200 bg-white px-4 py-3">
           <h1 id="titulo-chat" className="text-base font-semibold text-marca">Asistente</h1>
           <Boton variante="secundario" onClick={nuevaConversacion} disabled={enviando}>Nueva conversación</Boton>

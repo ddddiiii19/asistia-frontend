@@ -8,6 +8,7 @@ import { mensajeError } from '@/lib/errores';
 import { formatearFecha } from '@/lib/fechas';
 import { Alerta, Boton } from '@/components/ui';
 import { FiltrosAdmin, SIN_FILTROS } from '@/components/FiltrosAdmin';
+import { EncabezadoModulo } from '@/components/EncabezadoModulo';
 import { Paginacion } from '@/components/Paginacion';
 
 const POR_PAGINA = 15;
@@ -43,15 +44,15 @@ export function HistorialAdmin() {
 
   return (
     <div className="space-y-6">
-      <section aria-labelledby="titulo-historial-admin">
-        <Link href="/admin" className="text-sm text-marca underline underline-offset-2">← Volver al panel</Link>
-        <h1 id="titulo-historial-admin" className="mt-2 text-xl font-semibold text-marca">Historial de conversaciones</h1>
-        <p className="mt-1 text-sm text-slate-600">
-          {esGlobal
-            ? 'Conversaciones de los usuarios con el asistente, de la más reciente a la más antigua.'
-            : 'Conversaciones de los usuarios dirigidas a tu dependencia (solo consulta).'}
-        </p>
-      </section>
+      <EncabezadoModulo
+        modulo="historial"
+        id="titulo-historial-admin"
+        titulo="Historial de conversaciones"
+        volver
+        descripcion={esGlobal
+          ? 'Conversaciones de los usuarios con el asistente, de la más reciente a la más antigua.'
+          : 'Conversaciones de los usuarios dirigidas a tu dependencia (solo consulta).'}
+      />
 
       <FiltrosAdmin etiqueta="Filtros del historial" esGlobal={esGlobal} onAplicar={aplicar} />
 

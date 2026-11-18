@@ -385,7 +385,7 @@ describe('información general de TEINCO (front-end contra el back-end real)', (
   it('lo que no está en la información se escala con el contacto institucional, sin inventar', async () => {
     const r = await u.cliente.chat({ idSesion: `integracion-info-${sufijo}-0003`, mensaje: '¿Tienen sede en Medellín?' });
     expect(r.escalada).toBe(true);
-    expect(r.respuesta).toContain('601 743 32 00');
+    expect(r.contacto.texto).toContain('601 743 32 00');
     expect(r.respuesta).not.toContain('Medellín');
   });
 

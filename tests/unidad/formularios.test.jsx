@@ -184,13 +184,13 @@ describe('panel administrativo', () => {
     return screen.findByRole('heading', { name: 'Crear cuenta de usuario' });
   });
 
-  it('el administrador de dependencia no ve el formulario y su alcance es de solo consulta', async () => {
+  it('el administrador de dependencia no ve el formulario y su alcance es su dependencia', async () => {
     guardarSesion({ token: 't', cuenta: { tipo: 'administrador', alcance_admin: 'dependencia', id_dependencia: 2, nombre_usuario: 'admin_registro' } });
     api.dependencias.mockResolvedValue([{ id_dependencia: 2, nombre: 'Registro y Control' }]);
     envolver(<PanelAdmin />);
     expect(await screen.findByText(/Registro y Control/)).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Crear cuenta de usuario' })).toBeNull();
-    expect(screen.getByText(/solo consulta/)).toBeInTheDocument();
+    expect(screen.getByText('Dependencia: Registro y Control')).toBeInTheDocument();
   });
 
   it('crea una cuenta y no muestra la contraseña', async () => {

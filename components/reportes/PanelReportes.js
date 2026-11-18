@@ -13,6 +13,8 @@ import { Alerta, Boton } from '@/components/ui';
 import { FiltrosAdmin, SIN_FILTROS } from '@/components/FiltrosAdmin';
 import { Paginacion } from '@/components/Paginacion';
 import { Estado } from '@/components/reportes/Estado';
+import { GraficaDona } from '@/components/reportes/GraficaDona';
+import { EncabezadoModulo } from '@/components/EncabezadoModulo';
 
 const POR_PAGINA = 15;
 const LIMITE_EXPORTACION = 500; // máximo que acepta el backend por solicitud
@@ -43,15 +45,15 @@ export function PanelReportes() {
 
   return (
     <div className="space-y-6">
-      <section aria-labelledby="titulo-reportes">
-        <Link href="/admin" className="text-sm text-marca underline underline-offset-2">← Volver al panel</Link>
-        <h1 id="titulo-reportes" className="mt-2 text-xl font-semibold text-marca">Reportes y estadísticas</h1>
-        <p className="mt-1 text-sm text-slate-600">
-          {esGlobal
-            ? 'Uso del asistente en todas las dependencias de TEINCO.'
-            : 'Uso del asistente en tu dependencia (solo consulta).'}
-        </p>
-      </section>
+      <EncabezadoModulo
+        modulo="reportes"
+        id="titulo-reportes"
+        titulo="Reportes y estadísticas"
+        volver
+        descripcion={esGlobal
+          ? 'Uso del asistente en todas las dependencias de TEINCO.'
+          : 'Uso del asistente en tu dependencia (solo consulta).'}
+      />
 
       <FiltrosAdmin etiqueta="Filtros del reporte" esGlobal={esGlobal} onAplicar={setFiltros} />
 
@@ -86,10 +88,15 @@ export function PanelReportes() {
                 <BarrasSimples filas={resumen.temas_mas_consultados.map((t) => ({ nombre: t.tema, total: t.total }))} />
               </Tarjeta>
             </div>
-            <Tarjeta id="faq" titulo="Preguntas frecuentes del catálogo más abiertas">
-              <p className="-mt-1 mb-2 text-xs text-slate-500">Contador acumulado del catálogo; no depende de las fechas seleccionadas.</p>
-              <ListaFaq filas={resumen.faq_mas_consultadas} />
-            </Tarjeta>
+            <div className="grid gap-6 lg:grid-cols-2">
+              <Tarjeta id="dona" titulo="Distribución de las consultas">
+                <GraficaDona resumen={resumen} filtros={filtros} />
+              </Tarjeta>
+              <Tarjeta id="faq" titulo="Preguntas frecuentes del catálogo más abiertas">
+                <p className="-mt-1 mb-2 text-xs text-slate-500">Contador acumulado del catálogo; no depende de las fechas seleccionadas.</p>
+                <ListaFaq filas={resumen.faq_mas_consultadas} />
+              </Tarjeta>
+            </div>
           </>
         )}
         </div>
