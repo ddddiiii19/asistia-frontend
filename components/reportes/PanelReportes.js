@@ -14,6 +14,7 @@ import { FiltrosAdmin, SIN_FILTROS } from '@/components/FiltrosAdmin';
 import { Paginacion } from '@/components/Paginacion';
 import { Estado } from '@/components/reportes/Estado';
 import { GraficaDona } from '@/components/reportes/GraficaDona';
+import { DescargaDependencias, DescargaSerie, DescargaTemas } from '@/components/reportes/DescargasGraficas';
 import { EncabezadoModulo } from '@/components/EncabezadoModulo';
 
 const POR_PAGINA = 15;
@@ -77,15 +78,18 @@ export function PanelReportes() {
             <div className="grid gap-6 lg:grid-cols-2">
               <Tarjeta id="deps" titulo="Dependencias a las que se direccionan las consultas">
                 <BarrasDependencias filas={resumen.por_dependencia} total={resumen.total} />
+                <DescargaDependencias resumen={resumen} filtros={filtros} />
               </Tarjeta>
               <Tarjeta id="serie" titulo="Consultas por día">
                 <SerieDiaria dias={resumen.consultas_por_dia} />
+                <DescargaSerie resumen={resumen} filtros={filtros} />
               </Tarjeta>
               <Tarjeta id="preguntas" titulo="Preguntas más frecuentes">
                 <ListaPreguntas filas={resumen.preguntas_mas_frecuentes} />
               </Tarjeta>
               <Tarjeta id="temas" titulo="Temas más consultados">
                 <BarrasSimples filas={resumen.temas_mas_consultados.map((t) => ({ nombre: t.tema, total: t.total }))} />
+                <DescargaTemas resumen={resumen} filtros={filtros} />
               </Tarjeta>
             </div>
             <div className="grid gap-6 lg:grid-cols-2">
